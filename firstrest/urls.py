@@ -13,10 +13,29 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+#from django.contrib import admin
+#from django.urls import path, include
+#import post.urls
+#import userpost.urls
+
+#urlpatterns = [
+#    path('', include('post.urls')),
+#    path('', include('userpost.urls')),
+#]
+
+from django.conf import settings
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path, include
-import post.urls
+from post import views
+from userpost import views # 추가
+from rest_framework import urls
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path('', include('post.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('post.urls')), 
+    path('userpost/', include('userpost.urls')), # 추가
+    path('api-auth/', include('rest_framework.urls')),
+    path('api-token-auth/', obtain_auth_token),
 ]

@@ -11,14 +11,17 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework import renderers
 from django.http import HttpResponse
+from .pagination import MyPagination
 # Create your views here.
 
 
 #viewset
 ###
+
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('id')
     serializer_class = PostSerializer
+    pagination_class = MyPagination
 #    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
 
     @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
